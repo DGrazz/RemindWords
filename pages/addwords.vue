@@ -11,7 +11,8 @@
             (Separa las diferentes palabras con comas)
           </p>
           <form @submit.prevent="addWord" class="w-full py-2 px-3 rounded-md bg-white/25 flex justify-between">
-            <input v-model="word" type="text" class="w-[90%] h-full bg-transparent outline-none" placeholder="Add words" autofocus />
+            <input v-model="word" type="text" class="w-[90%] h-full bg-transparent outline-none" placeholder="Add words"
+              autofocus />
             <button class="bg-white size-8 rounded-md flex justify-center items-center group">
               <PlusIcon
                 class="transform group-hover:rotate-90 group-hover:scale-110 group-hover:text-[#d66bd1] transition duration-300 size-5" />
@@ -23,8 +24,8 @@
       <article
         class="w-1/3 min-h-40 py-2 px-3 rounded-md flex flex-col items-start justify-start border-2 border-white bg-white/15">
         <h3 class="font-medium text-xl">Added words</h3>
-        <p >
-        <span v-for="word in words" class="text-[#464646] text-base">{{ word }}, </span>
+        <p>
+          <span v-for="word in words" class="text-[#464646] text-base">{{ word }}, </span>
         </p>
       </article>
     </section>
@@ -32,7 +33,11 @@
 </template>
 
 <script>
+import { useStore } from '@/stores/counter';
+import { computed } from 'vue';
+
 export default {
+
   data() {
     return {
       word: '',
@@ -41,24 +46,31 @@ export default {
   },
   methods: {
     addWord() {
+      const store = useStore();
+
       if (this.word) {
-        if(/^[a-zA-Z]+$/.test(this.word) && this.word.length >= 2){
+        if (/^[a-zA-Z]+$/.test(this.word) && this.word.length >= 2) {
           this.word = this.capitalizeFirstLetter(this.word);
 
           this.words.push(this.word);
+          store.words = this.words;
           console.log('Adding word');
-          
+
           this.word = '';
-        }else{
+        } else {
           alert('Please add a valid word');
         }
-      }else{
+      } else {
         alert('Please add a word');
       }
     },
     capitalizeFirstLetter(word) {
       return word.charAt(0).toUpperCase() + word.slice(1);
     },
+  },
+  created() {
+    const store = useStore();
+    this.words = computed(() => store.words);
   },
 }
 </script>
