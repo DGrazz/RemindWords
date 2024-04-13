@@ -3,11 +3,11 @@
     <main class="w-[70%] mx-auto">
         <Header />
 
-        <section class="flex flex-col justify-center items-center">
+        <section class="flex flex-col justify-center items-center gap-2">
             <h1 class="uppercase font-bold text-2xl">Adivina esta palabra</h1>
             <p class="text-xl text-[#964D98]">{{ word }}</p>
             
-            <button @click="changeRandomWord" class="border border-white flex justify-center items-center gap-1  bg-gradient-to-r from-cyan-300 to-purple-400">Otra palabra</button>
+            <button @click="changeRandomWord" class="border border-white flex justify-center items-center gap-1 px-4 py-1 rounded-md bg-gradient-to-r from-cyan-200 to-purple-200">Otra palabra</button>
         </section>
     </main>
 </template>
