@@ -1,4 +1,8 @@
 <template>
+  <head>
+        <title>Remindwords - Add words</title>
+    </head>
+
   <Background />
   <main class="w-[70%] mx-auto">
     <Header />
@@ -10,7 +14,7 @@
           <p class="text-xs text-[#676767] font-medium">
             (Separa las diferentes palabras con comas)
           </p>
-          <form @submit.prevent="addWord" class="w-full py-2 px-3 rounded-md bg-white/25 flex justify-between">
+          <form @submit.prevent="addWord" class="w-full py-2 px-3 rounded-md bg-white/25 flex justify-between items-center">
             <input v-model="word" type="text" class="w-[90%] h-full bg-transparent outline-none" placeholder="Add words"
               autofocus />
             <button class="bg-white size-8 rounded-md flex justify-center items-center group">
