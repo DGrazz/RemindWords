@@ -26,7 +26,7 @@
                 <RotateIcon class="size-6" />
             </button>
 
-            
+
             <p><span class="text-xl font-bold" v-for="word in goodAnswers">{{ word }}, </span></p>
 
         </section>
@@ -103,10 +103,12 @@ export default {
             this.goodAnswers = [];
             this.goodAnswers.push(this.fetchResponse.trans);
 
-            for (let i = 0; i < this.fetchResponse.dict.length; i++) {
-                for (let j = 0; j < this.fetchResponse.dict[i].terms.length; j++) {
-                    let cleanWord = this.fetchResponse.dict[i].terms[j].replace(/[^a-zñáéíóúüA-ZÑÁÉÍÓÚÜ]/g, '');
-                    this.goodAnswers.push(cleanWord);
+            if (this.fetchResponse.dict) {
+                for (let i = 0; i < this.fetchResponse.dict.length; i++) {
+                    for (let j = 0; j < this.fetchResponse.dict[i].terms.length; j++) {
+                        let cleanWord = this.fetchResponse.dict[i].terms[j].replace(/[^a-zñáéíóúüA-ZÑÁÉÍÓÚÜ]/g, '');
+                        this.goodAnswers.push(cleanWord);
+                    }
                 }
             }
 
