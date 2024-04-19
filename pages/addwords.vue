@@ -50,6 +50,7 @@
 <script>
 import { useStore } from '@/stores/counter';
 import { computed } from 'vue';
+import { useToast } from "vue-toastification";
 
 export default {
 
@@ -58,6 +59,7 @@ export default {
       word: '',
       words: [],
       editWords: false,
+      toast: useToast(),
     };
   },
   methods: {
@@ -93,6 +95,7 @@ export default {
     },
     removeWord(index) {
       this.words.splice(index, 1);
+      this.toast.error("Word deleted");
       console.log('Word removed');
     },
   },
