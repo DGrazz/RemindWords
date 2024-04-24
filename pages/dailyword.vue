@@ -30,6 +30,21 @@
             <p><span class="text-xl font-bold" v-for="word in goodAnswers">{{ word }}, </span></p>
 
         </section>
+
+        <transition name="fade">
+            <div v-show="showModal"
+                class="bg-white top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 px-24 py-20 rounded-lg absolute  space-y-4 shadow-lg">
+                <h2 class="text-3xl uppercase font-semibold text-center">Has acertado tu palabra del dia</h2>
+                <h3 class="text-xl text-center">¿ Quieres hacer otra palabra ?</h3>
+                <div class="flex justify-center items-center gap-4">
+                    <button @click="handleYesClick"
+                        class="px-8 py-1 font-medium rounded-md border border-[#9542FF] hover:bg-[#9542FF] hover:text-white hover:-translate-y-1 transition duration-200">Si</button>
+                    <button @click="showModal = false"
+                        class="px-8 py-1 font-medium rounded-md border border-[#FD84FF] hover:bg-[#FD84FF] hover:text-white hover:-translate-y-1 transition duration-200">No</button>
+                </div>
+            </div>
+        </transition>
+
     </main>
 </template>
 
@@ -37,6 +52,7 @@
 import { useStore } from '@/stores/counter';
 import { computed } from 'vue';
 import axios from 'axios';
+import { useToast } from "vue-toastification";
 
 export default {
 
@@ -47,9 +63,16 @@ export default {
             goodAnswers: [],
             userAnswere: '',
             fetchResponse: {},
+            toast: useToast(),
+            showModal: false,
         };
     },
     methods: {
+        handleYesClick() {
+            this.showModal = false;
+            this.setRandomWord();
+        },
+        
         setRandomWord() {
             if (this.words.length == 0) {
                 this.word = 'No hay palabras';
@@ -89,11 +112,20 @@ export default {
             }
 
             if (correct) {
-                alert('Correcto');
                 this.userAnswere = '';
+                this.toast.success("Palabra correcta", {
+                    position: 'top-center',
+                    timeout: 2000,
+                });
+
+                this.showModal = true;
+
             } else {
-                alert('Incorrecto');
                 this.userAnswere = '';
+                this.toast.error("Incorrecto", {
+                    position: 'top-center',
+                    timeout: 2000,
+                });
             }
         },
 
@@ -146,3 +178,21 @@ export default {
     },
 }
 </script>
+
+
+<style>
+.fade-enter-from,
+.fade-leave-to {
+    opacity: 0;
+}
+
+.fade-enter-to,
+.fade-leave-from {
+    opacity: 1;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.5s;
+}
+</style>
